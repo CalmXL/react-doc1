@@ -38,7 +38,9 @@ export default function Form () {
 	}
 	
 	function handleImageChange (e) {
-	
+		updatePerson(draft => {
+			draft.artWork.image = e.target.value;
+		})
 	}
 	
 	return (
