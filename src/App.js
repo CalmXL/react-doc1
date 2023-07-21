@@ -13,7 +13,7 @@
 // import Form from './components/event/demo5-2';
 // import Form from './components/event/demo5-3';
 // import Form from './components/event/demo5-4';
-import List from './components/event/demo6';
+import BucketList from './components/event/demo6';
 
 function App() {
   return (
@@ -36,9 +36,10 @@ function App() {
       {/*<MovingDot />*/}
       {/* <Form /> */}
 
-      <List />
+      {/* <List /> */}
       {/* <ShapeEditor /> */}
       {/* <CounterList /> */}
+      <BucketList />
     </div>
   );
 }

@@ -229,52 +229,258 @@ import { useState } from "react";
  * 新元素，最后展开原数组中剩下的部分。
  */
 
+// let nextId = 3;
+// const initialArtist = [
+// 	{ id: 0, name: 'name-0' },
+// 	{ id: 1, name: 'name-1' },
+// 	{ id: 2, name: 'name-2' },
+// ];
+
+// export default function List () {
+// 	const [name, setName] = useState('');
+// 	const [artists, setArtists] = useState(initialArtist);
+
+// 	function handleChange (e) {
+// 		setName(e.target.value);
+// 	}
+
+// 	function handleClick (e) {
+// 		const insertAt = 1;
+// 		const nextArtists = [
+// 			...artists.slice(0, insertAt),
+// 			{ id: nextId ++, name: name },
+// 			...artists.slice(insertAt)
+// 		];
+
+// 		setArtists(nextArtists);
+// 	}
+
+// 	return (
+// 		<>
+// 			<h1>振奋人心的雕塑家们：</h1>
+// 			<input 
+// 				value={ name }
+// 				onChange={handleChange}
+// 			/>
+// 			<button onClick={handleClick}>插入</button>
+
+// 			<ul>
+// 				{
+// 					artists.map(artist => (
+// 						<li 
+// 							key={artist.id }
+// 						>
+// 							{ artist.name }
+// 						</li>
+// 					))
+// 				}
+// 			</ul>
+// 		</>
+// 	)
+// }
+
+
+/**
+ * 其他改变数组的情况
+ * 
+ * 总会有一些事，是你仅仅靠展开运算符和 map() 或者 filter() 等不会直接修改原值的方法所无法做到的。 
+ * 例如，你可能想翻转数组，或是对数组排序。而 Js 中的 reverse() 和 sort() 方法会改变原数组，所以
+ * 你无法直接使用它们。
+ * 
+ * 然而，你可以先拷贝这个数组，再改变这个拷贝之后的值。
+ */
+
+// let nextId = 3;
+// const initialList = [
+// 	{ id: 0, title: 'content-0' },
+// 	{ id: 1, title: 'content-1' },
+// 	{ id: 2, title: 'content-2' },
+// ];
+
+// export default function List () {
+
+// 	const [list, setList] = useState(initialList);
+
+// 	function handleClick () {
+// 		// 使用 [...list] 展开运算符创建了一份数组的拷贝值。
+// 		// 然而，即使你拷贝了数组，你还是不能直接修改其内部的元素。
+// 		// 这是因为数组的浅拷贝使浅拷贝 -- 新的数组中依然保留了于原始数组相同的元素。
+// 		const nextList = [...list];
+// 		nextList.reverse();
+// 		setList(nextList);
+// 	}
+
+// 	return (
+// 		<>
+// 			<button onClick={handleClick}>
+// 				翻转
+// 			</button>
+// 			<ul>
+// 				{ 
+// 					list.map((item) => (
+// 						<li key={ item.id }>{ item.title }</li>
+// 					))
+// 				}
+// 			</ul>
+// 		</>
+// 	)
+// }
+
+
+/**
+ * 更新数组内部的对象
+ * 
+ * 对象并不是真的位于数组 "内部"。可能他们在代码中看起来像是在数组"内部"，
+ * 但其实数组中的每个对象都是这个数组"指向"的一个存储于其它位置的值。
+ * 
+ * 当你更新一个嵌套的 state 时，你需要从想要更新的地方创建拷贝值，一直这样，直到顶层。
+ */
+
+// let nextId = 3;
+// const initialList = [
+// 	{ id: 0, title: 'title-0', seen: false },
+// 	{ id: 1, title: 'title-1', seen: false },
+// 	{ id: 2, title: 'title-2', seen: true }
+// ];
+
+// export default function BucketList () {
+
+// 	const [myList, setMyList] = useState(initialList);
+// 	const [yourList, setYourList] = useState(initialList);
+
+// 	function handleToggleMyList (id, nextSeen) {
+// 		const nextList = myList.map(item => {
+// 			if (item.id === id ) {
+// 				return { ...item, seen: nextSeen }
+// 			}
+
+// 			return item;
+// 		});
+		
+// 		setMyList(nextList);
+// 	}
+
+// 	function handleToggleYourList (id, nextSeen) {
+// 		const nextList = yourList.map(item => {
+// 			if (item.id === id ) {
+// 				return { ...item, seen: nextSeen }
+// 			}
+
+// 			return item;
+// 		});
+		
+// 		setYourList(nextList);
+// 	}
+
+// 	return (
+// 		<>
+// 			<h1>艺术愿望清单</h1>
+// 			<h2>我想看的艺术清单：</h2>
+// 			<ItemList 
+// 				artLists={myList}
+// 				onToggle={handleToggleMyList}
+// 			/>
+// 			<h2>你想看的艺术清单：</h2>
+// 			<ItemList 
+// 				artLists={yourList}
+// 				onToggle={handleToggleYourList}
+// 			/>
+// 		</>
+// 	)
+// }
+
+// function ItemList ({ artLists, onToggle }) {
+
+// 	return (
+// 		<ul>
+// 			{ 
+// 				artLists.map(artwork => (
+// 					<li
+// 						key={artwork.id}
+// 					>
+// 						<input 
+// 							type="checkbox" 
+// 							onChange={ (e) => onToggle(artwork.id, e.target.checked) }
+// 							checked={ artwork.seen }
+// 						/>
+// 						{ artwork.title }
+// 					</li>
+// 				))
+// 			}
+// 		</ul>
+// 	)
+// }
+
+
+/**
+ * 使用 Immer 编写简洁的更新逻辑
+ * 
+ * 在没有 mutation 的前提下，更新嵌套数组可能会变得有点重复。就像对对像一样：
+ */
+
+import { useImmer } from "use-immer";
+
 let nextId = 3;
-const initialArtist = [
-	{ id: 0, name: 'name-0' },
-	{ id: 1, name: 'name-1' },
-	{ id: 2, name: 'name-2' },
+const initialList = [
+	{ id: 0, title: 'title-0', seen: false },
+	{ id: 1, title: 'title-1', seen: false },
+	{ id: 2, title: 'title-2', seen: true }
 ];
 
-export default function List () {
-	const [name, setName] = useState('');
-	const [artists, setArtists] = useState(initialArtist);
+export default function BucketList () {
 
-	function handleChange (e) {
-		setName(e.target.value);
+	const [myList, updateMyList] = useImmer(initialList);
+	const [yourList, updateYourList] = useImmer(initialList);
+
+	function handleToggleMyList (id, nextSeen) {
+		updateMyList(draft => {
+			const artwork = draft.find(a => a.id === id);
+			artwork.seen = nextSeen;
+		})
 	}
 
-	function handleClick (e) {
-		const insertAt = 1;
-		const nextArtists = [
-			...artists.slice(0, insertAt),
-			{ id: nextId ++, name: name },
-			...artists.slice(insertAt)
-		];
-
-		setArtists(nextArtists);
+	function handleToggleYourList (id, nextSeen) {
+		updateYourList(draft => {
+			const artwork = draft.find(b => b.id === id);
+			artwork.seen = nextSeen;
+		})
 	}
 
 	return (
 		<>
-			<h1>振奋人心的雕塑家们：</h1>
-			<input 
-				value={ name }
-				onChange={handleChange}
+			<h1>艺术愿望清单</h1>
+			<h2>我想看的艺术清单：</h2>
+			<ItemList 
+				artLists={myList}
+				onToggle={handleToggleMyList}
 			/>
-			<button onClick={handleClick}>插入</button>
-
-			<ul>
-				{
-					artists.map(artist => (
-						<li 
-							key={artist.id }
-						>
-							{ artist.name }
-						</li>
-					))
-				}
-			</ul>
+			<h2>你想看的艺术清单：</h2>
+			<ItemList 
+				artLists={yourList}
+				onToggle={handleToggleYourList}
+			/>
 		</>
+	)
+}
+
+function ItemList ({ artLists, onToggle }) {
+
+	return (
+		<ul>
+			{ 
+				artLists.map(artwork => (
+					<li
+						key={artwork.id}
+					>
+						<input 
+							type="checkbox" 
+							onChange={ (e) => onToggle(artwork.id, e.target.checked) }
+							checked={ artwork.seen }
+						/>
+						{ artwork.title }
+					</li>
+				))
+			}
+		</ul>
 	)
 }
