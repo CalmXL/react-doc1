@@ -23,4 +23,9 @@ form.onsubmit = handleFormSubmit;
 textarea.oninput = handleTextareaChange;
 
 function handleFormSubmit (e) {
+
+}
+
+function handleTextareaChange (e) {
+	
 }
